@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+
+  x-ray_multi_object:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: x-ray_multi_object
+
+    ports:
+      - "2003:22"
+
+    deploy:
+     resources:
+       reservations:
+         devices:
+          - driver: nvidia
+            device_ids: ['0']
+            capabilities: [gpu]
+
+    volumes:
+      - '../:/home/Hosting/workspace:rw'
+      - '~/.ssh:/home/Hosting/.ssh:ro'
+      - '~/.gitconfig:/home/Hosting/.gitconfig:ro'
