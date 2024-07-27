@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+
+  x_ray_multi_object_recognition_data_dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    
+    restart: always
+
+    ports:
+      - "2003:22"
+
+    volumes:
+      - '../:/home/Hosting/workspace:rw'
+      - '~/.ssh:/home/Hosting/.ssh:ro'
+      - '~/.gitconfig:/home/Hosting/.gitconfig:ro'
+    
+    deploy:
+     resources:
+       reservations:
+         devices:
+          - driver: nvidia
+            device_ids: ['0']
+            capabilities: [gpu]
